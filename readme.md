@@ -4,4 +4,4 @@ While holding down the lean button (default q), your token's vision and light so
 The maximum distance you can lean is configurable.  
   
 ## Planned features
--adjust token position to follow the lean a small amount and be visible to other players
+- adjust token position to follow the lean a small amount and be visible to other players
