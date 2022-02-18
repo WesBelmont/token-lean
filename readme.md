@@ -5,3 +5,4 @@ The maximum distance you can lean is configurable.
   
 ## Planned features
 - adjust token position to follow the lean a small amount and be visible to other players
+- gracefully handle leaning towards walls

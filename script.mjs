@@ -2,8 +2,8 @@ const MODULE_NAME = 'token-lean'
 
 let wait = false
 let rate = 30
-const g = new PIXI.Graphics()
-window.color = (0x00ff00)
+// const g = new PIXI.Graphics()
+// window.color = (0x00ff00)
 
 Hooks.on('init', ()=> {
     game.settings.register(MODULE_NAME, 'leaning', {
@@ -81,18 +81,21 @@ function leanTowardsMouse() {
         return
     } 
     else {
-    //     //adjust vision to be on the near side of the collision
-    //     const distance = Math.hypot(collision.x-origin.x, collision.y-origin.y)
-    //     const ratio = (distance-1)/distance
-    //     const position = {
-    //         x: origin.x + (collision.x - origin.x)*ratio,
-    //         y: origin.y + (collision.y - origin.y)*ratio
-    //     }
-        g.beginFill(window.color)
-        g.drawCircle(collision.x, collision.y, 1)
-        g.endFill()
-        canvas.app.stage.addChild(g)
-    //     updateVisionPosition(token, position)
+        // debug to show collisions on canvas
+        // g.beginFill(window.color)
+        // g.drawCircle(collision.x, collision.y, 1)
+        // g.endFill()
+        // canvas.app.stage.addChild(g)
+
+        // CURRENTLY BROKEN
+        // //adjust vision to be on the near side of the collision
+        // const distance = Math.hypot(collision.x-origin.x, collision.y-origin.y)
+        // const ratio = (distance-1)/distance
+        // const position = {
+        //     x: origin.x + (collision.x - origin.x)*ratio,
+        //     y: origin.y + (collision.y - origin.y)*ratio
+        // }
+        // updateVisionPosition(token, position)
     }
     
 }
@@ -100,9 +103,6 @@ function leanTowardsMouse() {
 function updateVisionPosition(token, newPosition=null, reset=false) {
     const sourceId = token.sourceId
     const isVisionSource = token._isVisionSource()
-    
-    
-    
     
     if ( isVisionSource && !reset ) {
         
@@ -116,8 +116,6 @@ function updateVisionPosition(token, newPosition=null, reset=false) {
         lightData.y = newPosition.y
         token.light.initialize(lightData)
     } else {
-        // g.clear()
-        // canvas.app.stage.removeChild(g)
         let visionData = token.vision.data
         visionData.x = token.center.x
         visionData.y = token.center.y
