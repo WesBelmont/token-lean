@@ -1,9 +1,9 @@
 
 
-Hooks.once('init', ()=> {
-    if (!game.modules.get('libWrapper')?.active ) return
-    if (!game.modules.get('levels')?.active) return
-    
+Hooks.on('ready', ()=> {
+    if (!game.modules.get('levels')?.active) {
+        return
+    }
     //maybe a dummy token class would be useful. I don't even really know what a class is though.
     libWrapper.register('token-lean', 'Levels.prototype.checkCollision', (wrapped, token1, token2, type) => {
         if (token1.vision?.active) {
@@ -46,7 +46,6 @@ Hooks.once('init', ()=> {
     
     
     libWrapper.register('token-lean', 'Levels.prototype.raycastDebug', function () {
-        // this = Levels.prototype
         if (_levels.RAYS && canvas.tokens.controlled[0]) {
             let oldcontainer = canvas.controls.debug.children.find((c) => (c.name = "levelsRAYS"));
             if (oldcontainer) oldcontainer.clear();
@@ -110,21 +109,21 @@ Hooks.once('init', ()=> {
         return wrapped(token)
     }, 'WRAPPER')
     
-    libWrapper.register('token-lean', 'ForegroundLayer.prototype._drawOcclusionShapes', function (wrapped, tokens) {
-        for (const t in tokens) {
-            if (token.vision?.active) {
-                tokens[t.index] = {
-                    center: {
-                        x: t.vision.x,
-                        y: t.vision.y
-                    }, 
-                    w: t.w,
-                    h: t.h
-                }
-            }
-        } 
-        return wrapped(tokens)
-    }, "WRAPPER");
+    // libWrapper.register('token-lean', 'ForegroundLayer.prototype._drawOcclusionShapes', function (wrapped, tokens) {
+    //     for (const t in tokens) {
+    //         if (token.vision?.active) {
+    //             tokens[t.index] = {
+    //                 center: {
+    //                     x: t.vision.x,
+    //                     y: t.vision.y
+    //                 }, 
+    //                 w: t.w,
+    //                 h: t.h
+    //             }
+    //         }
+    //     } 
+    //     return wrapped(tokens)
+    // }, "WRAPPER");
     
     //tokenInRange PV override -- FUTURE --
     

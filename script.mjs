@@ -7,7 +7,7 @@ let rate = 30
 // const g = new PIXI.Graphics()
 // window.color = (0x00ff00)
 
-Hooks.once('init', ()=> {
+Hooks.on('init', ()=> {
     game.settings.register(MODULE_NAME, 'leaningToken', {
         config: false,
         type: String,
@@ -32,7 +32,7 @@ Hooks.once('init', ()=> {
         hint: 'Press to move your vision towards the mouse cursor.',
         editable: [{key: 'KeyQ'}],
         onDown: () => {
-            if (canvas.tokens.controlled?.vision?.active) {
+            if (canvas.tokens.controlled.length > 0) {
                 game.settings.set(MODULE_NAME, 'leaningToken', canvas.tokens.controlled[0].id)
                 enableLean(true)
             }
@@ -112,22 +112,22 @@ function updateVisionPosition(token, newPosition=null, reset=false) {
         let visionData = token.vision.data
         visionData.x = newPosition.x
         visionData.y = newPosition.y
-        token.vision._initializeData(visionData)
+        token.vision.initialize(visionData)
         
         let lightData = token.light.data
         lightData.x = newPosition.x
         lightData.y = newPosition.y
-        token.light._initializeData(lightData)
+        token.light.initialize(lightData)
     } else {
         let visionData = token.vision.data
         visionData.x = token.center.x
         visionData.y = token.center.y
-        token.vision._initializeData(visionData)
+        token.vision.initialize(visionData)
         
         let lightData = token.light.data
         lightData.x = token.center.x
         lightData.y = token.center.y
-        token.light._initializeData(lightData)
+        token.light.initialize(lightData)
     }
     canvas.perception.schedule({
         sight: {refresh: true},
