@@ -1,3 +1,5 @@
+import './compatability/index.mjs'
+
 const MODULE_NAME = 'token-lean'
 
 let wait = false
@@ -5,12 +7,13 @@ let rate = 30
 // const g = new PIXI.Graphics()
 // window.color = (0x00ff00)
 
-Hooks.on('init', ()=> {
-    game.settings.register(MODULE_NAME, 'leaning', {
+Hooks.once('init', ()=> {
+    game.settings.register(MODULE_NAME, 'leaningToken', {
         config: false,
         type: String,
         scope: 'client'
     })
+
     
     game.settings.register(MODULE_NAME, 'limit', {
         name: game.i18n.localize('q-to-lean.Limit.Name'),
@@ -29,8 +32,8 @@ Hooks.on('init', ()=> {
         hint: 'Press to move your vision towards the mouse cursor.',
         editable: [{key: 'KeyQ'}],
         onDown: () => {
-            if (canvas.tokens.controlled.length > 0) {
-                game.settings.set(MODULE_NAME, 'leaning', canvas.tokens.controlled[0].id)
+            if (canvas.tokens.controlled?.vision?.active) {
+                game.settings.set(MODULE_NAME, 'leaningToken', canvas.tokens.controlled[0].id)
                 enableLean(true)
             }
         },
@@ -50,7 +53,7 @@ function enableLean(enable) {
         leanTowardsMouse()
         document.addEventListener('mousemove', updateOnMouseMove)
     } else {
-        let token = canvas.tokens.get(game.settings.get(MODULE_NAME, 'leaning'))
+        let token = canvas.tokens.get(game.settings.get(MODULE_NAME, 'leaningToken'))
         updateVisionPosition(token, token.center, true)
         document.removeEventListener('mousemove', updateOnMouseMove)
         
@@ -66,13 +69,13 @@ function updateOnMouseMove() {
 }
 
 function leanTowardsMouse() {
-    const token = canvas.tokens.get(game.settings.get(MODULE_NAME, 'leaning'))
+    const token = canvas.tokens.get(game.settings.get(MODULE_NAME, 'leaningToken'))
     const mousePosition = canvas.app.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage)
     const limit = canvas.grid.size*(0.5+game.settings.get(MODULE_NAME, 'limit'))
     const origin = token.center
     const collisionRayLimit = Math.min(limit, Math.hypot(mousePosition.x - token.center.x, mousePosition.y - token.center.y))
     const collisionRay = Ray.towardsPoint(origin, mousePosition, collisionRayLimit)
-    //block leaning through impassable terrain walls
+    //block leaningToken through impassable terrain walls
     const collision = RadialSweepPolygon.getRayCollisions(collisionRay, {type:'move', mode: 'closest'})
     
     if (!collision) {
@@ -109,22 +112,22 @@ function updateVisionPosition(token, newPosition=null, reset=false) {
         let visionData = token.vision.data
         visionData.x = newPosition.x
         visionData.y = newPosition.y
-        token.vision.initialize(visionData)
+        token.vision._initializeData(visionData)
         
         let lightData = token.light.data
         lightData.x = newPosition.x
         lightData.y = newPosition.y
-        token.light.initialize(lightData)
+        token.light._initializeData(lightData)
     } else {
         let visionData = token.vision.data
         visionData.x = token.center.x
         visionData.y = token.center.y
-        token.vision.initialize(visionData)
+        token.vision._initializeData(visionData)
         
         let lightData = token.light.data
         lightData.x = token.center.x
         lightData.y = token.center.y
-        token.light.initialize(lightData)
+        token.light._initializeData(lightData)
     }
     canvas.perception.schedule({
         sight: {refresh: true},
