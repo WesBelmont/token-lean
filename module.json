@@ -29,13 +29,8 @@
     "packs": [],
     "system": [],
     "dependencies": [
-<<<<<<< HEAD
       "lib-wrapper",
       "perfect-vision"
-=======
-      "perfect-vision",
-      "libWrapper"
->>>>>>> 61b89887495b3fd0c9848410862466ce25586d18
     ],
     "socket": false,
     "manifest": "https://github.com/WesBelmont/token-lean/releases/latest/download/module.json",
