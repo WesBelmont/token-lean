@@ -1,4 +1,4 @@
 {
-    "q-to-lean.Limit.Name": "Maximum lean distance",
-    "q-to-lean.Limit.Hint": "How many squares a token can lean. Works best between 0 and 1. Default = 0.25 (1/4 into the next square)."
+    "token-lean.Limit.Name": "Maximum lean distance",
+    "token-lean.Limit.Hint": "How many squares a token can lean. Works best between 0 and 1. Default = 0.25 (1/4 into the next square)."
 }

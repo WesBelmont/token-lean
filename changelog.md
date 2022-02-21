@@ -1,3 +1,8 @@
+# 1.1.2
+- fixed it... I think. I dunno what happened, It just went and died on me.
+- it was throwing errors left right and centre, but now it's not.
+- and it doesn't seem to die if dependencies are not installed.
+
 # 1.1.1
 - fixed compatibilty loading
 - added libWrapper and perfect-vision as dependencies

@@ -46,6 +46,9 @@ Hooks.on('ready', ()=> {
     
     
     libWrapper.register('token-lean', 'Levels.prototype.raycastDebug', function () {
+        if (!canvas.tokens.controlled[0]?.vision?.active){
+            return
+        }
         if (_levels.RAYS && canvas.tokens.controlled[0]) {
             let oldcontainer = canvas.controls.debug.children.find((c) => (c.name = "levelsRAYS"));
             if (oldcontainer) oldcontainer.clear();

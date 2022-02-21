@@ -16,8 +16,8 @@ Hooks.on('init', ()=> {
 
     
     game.settings.register(MODULE_NAME, 'limit', {
-        name: game.i18n.localize('q-to-lean.Limit.Name'),
-        hint: game.i18n.localize('q-to-lean.Limit.Hint'),
+        name: game.i18n.localize('token-lean.Limit.Name'),
+        hint: game.i18n.localize('token-lean.Limit.Hint'),
         config: true,
         type: Number,
         scope: 'world',
@@ -32,7 +32,7 @@ Hooks.on('init', ()=> {
         hint: 'Press to move your vision towards the mouse cursor.',
         editable: [{key: 'KeyQ'}],
         onDown: () => {
-            if (canvas.tokens.controlled.length > 0) {
+            if (canvas.tokens.controlled[0]?.vision?.active === true) {
                 game.settings.set(MODULE_NAME, 'leaningToken', canvas.tokens.controlled[0].id)
                 enableLean(true)
             }
