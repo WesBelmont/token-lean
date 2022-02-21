@@ -1,3 +1,7 @@
+# 1.1.1
+- fixed compatibilty loading
+- added libWrapper and perfect-vision as dependencies
+
 ## 1.1.0
 - Added Levels compatability.
 - Made some changes to increase stability and maybe performance.
