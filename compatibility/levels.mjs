@@ -1,9 +1,11 @@
-
-
 Hooks.on('ready', ()=> {
+    if (!game.settings.get('token-lean', 'legacy')) {
+        return
+    }
     if (!game.modules.get('levels')?.active) {
         return
     }
+    console.log('Token Lean | loading Levels compatibility')
     //maybe a dummy token class would be useful. I don't even really know what a class is though.
     libWrapper.register('token-lean', 'Levels.prototype.checkCollision', (wrapped, token1, token2, type) => {
         if (token1.vision?.active) {
@@ -20,12 +22,6 @@ Hooks.on('ready', ()=> {
         return wrapped(token1, token2, type)
         
     }, 'WRAPPER')
-    
-    //--FUTURE LOW PRIORITY-- do I need to check templates? 
-    // libWrapper.register('token-lean', 'Levels.prototype.computeTemplates', (wrapped, token) => {
-    //     let dummyToken
-    //     return wrapped(dummyToken)
-    // }, 'WRAPPED')
     
     //I guess some people really do read my code.
     libWrapper.register('token-lean', 'Levels.prototype.advancedLosTestInLos', (wrapped, sourceToken, token) => {
@@ -44,7 +40,7 @@ Hooks.on('ready', ()=> {
         return wrapped(sourceToken, token)
     }, 'WRAPPER')
     
-    
+    //lazily overriding the whole function
     libWrapper.register('token-lean', 'Levels.prototype.raycastDebug', function () {
         if (!canvas.tokens.controlled[0]?.vision?.active){
             return

@@ -1,4 +1,13 @@
 {
     "token-lean.Limit.Name": "Maximum lean distance",
-    "token-lean.Limit.Hint": "How many squares a token can lean. Works best between 0 and 1. Default = 0.25 (1/4 into the next square)."
+    "token-lean.Limit.Hint": "How many squares a token can lean. Works best between 0 and 0.5. Default: 0.25 (1/4 into the next square).",
+    "token-lean.Keybind.Name": "Lean",
+    "token-lean.Keybind.Hint": "Press to move your vision towards the mouse cursor.",
+    "token-lean.LegacyMode.Name": "Disable live updates (Legacy Mode)",
+    "token-lean.LegacyMode.Hint": "Use the old method of calculating vision position. This may increase compatability with some modules that rely on token position to render visual changes.",
+    "token-lean.Combat.Name": "Allow leaning in combat",
+    "token-lean.Smoothing.Name": "Control distance (client)",
+    "token-lean.Smoothing.Hint": "A larger value allows for smoother control. Default: 1",
+    "token-lean.VisualTravel.Name": "Token image travel",
+    "token-lean.VisualTravel.Hint": "The distance a token appears to travel to other players."
 }

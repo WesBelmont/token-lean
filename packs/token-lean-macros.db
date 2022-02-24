@@ -1,0 +1,1 @@
+{"name":"Clear Leaning Flags","type":"script","author":"5iXtPMdsZmxZeM7W","img":"icons/svg/dice-target.svg","scope":"global","command":"canvas.tokens.updateAll({flags:{\"token-lean\":{offsetX:0,offsetY:0}}})","folder":null,"sort":0,"permission":{"default":0,"5iXtPMdsZmxZeM7W":3},"flags":{"core":{"sourceId":"Macro.7rsW58XdjrGsOp4V"}},"_id":"FgH1yyvWAX9J5WCi"}
