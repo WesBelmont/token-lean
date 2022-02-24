@@ -42,7 +42,7 @@
     ],
     "socket": false,
     "manifest": "https://github.com/WesBelmont/token-lean/releases/latest/download/module.json",
-    "download": "https://github.com/WesBelmont/token-lean/releases/download/2.0.0/module.zip",
+    "download": "https://github.com/WesBelmont/token-lean/raw/experimental/module.zip",
     "bugs": "https://github.com/WesBelmont/token-lean/issues",
     "changelog": "https://github.com/WesBelmont/token-lean/blob/master/changelog.md",
     "readme": "https://github.com/WesBelmont/token-lean/blob/master/readme.md",
