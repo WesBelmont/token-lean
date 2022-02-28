@@ -7,8 +7,8 @@ export function lean() {
     const offset = getOffset(origin, leanPoint, t)
 
     const updateData = {
-        x: leanPoint.x - Math.max(canvas.grid.size/2, t.width/2)+3,
-        y: leanPoint.y - Math.max(canvas.grid.size/2, t.height/2)+3,
+        x: leanPoint.x - Math.max(canvas.grid.size/2, t.width/2),
+        y: leanPoint.y - Math.max(canvas.grid.size/2, t.height/2),
         flags: {
             'token-lean': {
                 'offsetX': offset.x,
@@ -23,8 +23,8 @@ export function reset() {
     const origin = getTokenOrigin()
     const t = getSourceToken()
     const updateData = {
-        x: origin.x - Math.max(canvas.grid.size/2, t.width/2)+3,
-        y: origin.y - Math.max(canvas.grid.size/2, t.width/2)+3,
+        x: origin.x - Math.max(canvas.grid.size/2, t.width/2),
+        y: origin.y - Math.max(canvas.grid.size/2, t.width/2),
         flags: {
             'token-lean': {
                 'offsetX': 0,

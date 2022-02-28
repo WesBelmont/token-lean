@@ -9,22 +9,16 @@
         "discord": "WesBelmont#7510"
       }
     ],
-    "url": "https://github.com/WesBelmont/token-lean",
-    "flags": {
-      "allowBugReporter": true
-    },
     "version": "2.0.0",
     "minimumCoreVersion": "9",
     "compatibleCoreVersion": "9",
-    "scripts": [],
     "esmodules": ["index.mjs"],
-    "styles": [],
     "languages": [
-        {
-            "lang": "en",
-            "name": "English",
-            "path": "lang/en.json"
-        }
+      {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+      }
     ],
     "packs": [
       {
@@ -34,19 +28,20 @@
         "entity": "Macro"
       }
     ],
-    "system": [],
     "dependencies": [
       {
         "name": "lib-wrapper"
       }
     ],
     "socket": false,
-    "manifest": "https://github.com/WesBelmont/token-lean/releases/latest/download/module.json",
+    "url": "https://github.com/WesBelmont/token-lean",
+    "manifest": "https://github.com/WesBelmont/token-lean/raw/experimental/module.json",
     "download": "https://github.com/WesBelmont/token-lean/raw/experimental/module.zip",
     "bugs": "https://github.com/WesBelmont/token-lean/issues",
     "changelog": "https://github.com/WesBelmont/token-lean/blob/master/changelog.md",
     "readme": "https://github.com/WesBelmont/token-lean/blob/master/readme.md",
-    "protected": false,
-    "coreTranslation": false,
-    "library": false
+    "flags": {
+      "allowBugReporter": true
+    }
   }
+  

@@ -17,7 +17,7 @@ Hooks.once('init', ()=> {
             unset: true
         }
     })
-
+    
     game.settings.register('token-lean', 'limit', {
         name: game.i18n.localize('token-lean.Limit.Name'),
         hint: game.i18n.localize('token-lean.Limit.Hint'),
@@ -29,7 +29,7 @@ Hooks.once('init', ()=> {
             game.settings.set('token-lean', 'limit', Math.max(value, -0.5))
         }
     })
-
+    
     game.settings.register('token-lean', 'visual-travel', {
         name: game.i18n.localize('token-lean.VisualTravel.Name'),
         hint: game.i18n.localize('token-lean.VisualTravel.Hint'),
@@ -43,7 +43,7 @@ Hooks.once('init', ()=> {
             step: 0.05
         }
     })
-
+    
     game.settings.register('token-lean', 'mouseSmoothing', {
         name: game.i18n.localize('token-lean.Smoothing.Name'),
         hint: game.i18n.localize('token-lean.Smoothing.Hint'),
@@ -65,7 +65,7 @@ Hooks.once('init', ()=> {
         scope: 'world',
         default: false,
     })
-
+    
     game.settings.register('token-lean', 'legacy', {
         name: game.i18n.localize('token-lean.LegacyMode.Name'),
         hint: game.i18n.localize('token-lean.LegacyMode.Hint'),
@@ -75,7 +75,7 @@ Hooks.once('init', ()=> {
         default: false,
         onChange: () => {location.reload()}
     })
-
+    
     game.keybindings.register('token-lean', 'lean', {
         name: game.i18n.localize('token-lean.Keybind.Name'),
         hint: game.i18n.localize('token-lean.Keybind.Hint'),
@@ -101,26 +101,23 @@ Hooks.once('init', ()=> {
 })
 
 Hooks.once('ready', () => {
-    if (!isLegacy()) {
-        //set the offset of a token when leans
-        libWrapper.register('token-lean', 'Token.prototype.refresh', function (wrapped, ...args) {
-            if (this.document.getFlag('token-lean', 'offsetX') !== undefined || this.document.getFlag('token-lean', 'offsetY') !== undefined) {
-                this.hud.pivot.x = this.document.getFlag('token-lean', 'offsetX')
-                this.hud.pivot.y = this.document.getFlag('token-lean', 'offsetY')
-            }
-            this.document.getFlag('token-lean', 'border')
+    //set the offset of a token when leans
+    libWrapper.register('token-lean', 'Token.prototype.refresh', function (wrapped, ...args) {
+        if (this.document.getFlag('token-lean', 'offsetX') !== undefined || this.document.getFlag('token-lean', 'offsetY') !== undefined) {
+            this.hud.pivot.x = this.document.getFlag('token-lean', 'offsetX')
+            this.hud.pivot.y = this.document.getFlag('token-lean', 'offsetY')
+        }
+        return wrapped(...args)
+    }, 'WRAPPER')
+    
+    //disable storing the lean events in the history
+    libWrapper.register('token-lean', 'PlaceablesLayer.prototype.storeHistory', function (wrapped, ...args) {
+        if (nukeHistory) {
+            return undefined
+        } else {
             return wrapped(...args)
-        }, 'WRAPPER')
-        
-        //disable storing the lean events in the history
-        libWrapper.register('token-lean', 'PlaceablesLayer.prototype.storeHistory', function (wrapped, ...args) {
-            if (nukeHistory) {
-                return undefined
-            } else {
-                return wrapped(...args)
-            }
-        }, 'MIXED') 
-    }
+        }
+    }, 'MIXED') 
 })
 
 let nukeHistory
@@ -134,7 +131,7 @@ Hooks.on('preUpdateToken', (...args) => {
 
 function startLean() {
     if (!isLegacy()) {
-        lean()
+        lean().then(throttled=false)
     } else {
         startLegacyLean()
     }
@@ -142,7 +139,7 @@ function startLean() {
 
 function endLean() {
     if (!isLegacy()) {
-        reset()
+        reset().then(throttled=false)
         game.settings.set('token-lean', 'sourceToken', 'false')
     } else {
         endLegacyLean()
@@ -154,19 +151,32 @@ function throttledLean () {
     if (!throttled) {
         throttled = true
         startLean()
-        setTimeout(()=> {throttled = false}, 1000/game.settings.get('core', 'maxFPS'))
+        if (isLegacy()){
+            setTimeout(()=> {throttled = false}, 1000/game.settings.get('core', 'maxFPS'))
+        }
+        // setTimeout(()=> {throttled = false}, 1000)
     }
 }
 
-function lean() {
+let updateThrottled = false
+function throttledUpdate(token, updateData, options) {
+    if (!updateThrottled) {
+        console.log('updating')
+        updateThrottled = true
+        token.document.update(updateData, options)
+        setTimeout(()=> {updateThrottled = false}, 500)
+    }
+}
+
+async function lean() {
     const t = getSourceToken()
     const origin = getTokenOrigin()
     const leanPoint = getLeanPoint(origin, getMousePosition())
     const offset = getOffset(origin, leanPoint, t)
-
+    
     const updateData = {
-        x: leanPoint.x - Math.max(canvas.grid.size/2, t.width/2)+3,
-        y: leanPoint.y - Math.max(canvas.grid.size/2, t.height/2)+3,
+        x: leanPoint.x - Math.max(canvas.grid.size/2, t.width/2),
+        y: leanPoint.y - Math.max(canvas.grid.size/2, t.height/2),
         flags: {
             'token-lean': {
                 'offsetX': offset.x,
@@ -177,12 +187,12 @@ function lean() {
     t.document.update(updateData, {animate: false, bypass: false, lean: true})
 }
 
-function reset() {
+async function reset() {
     const origin = getTokenOrigin()
     const t = getSourceToken()
     const updateData = {
-        x: origin.x - Math.max(canvas.grid.size/2, t.width/2)+3,
-        y: origin.y - Math.max(canvas.grid.size/2, t.width/2)+3,
+        x: origin.x - Math.max(canvas.grid.size/2, t.width/2),
+        y: origin.y - Math.max(canvas.grid.size/2, t.width/2),
         flags: {
             'token-lean': {
                 'offsetX': 0,
@@ -197,7 +207,7 @@ function getLeanPoint(origin, destination) {
     const limit = getLeanLimit()
     const deltaX = destination.x-origin.x
     const deltaY = destination.y-origin.y
-
+    
     const smoothedDestination = applyPolarTransform({x: deltaX, y: deltaY}, smoothedDistance)
     const collisionRayLimit = Math.min(limit, Math.hypot(smoothedDestination.x, smoothedDestination.y))
     const collisionRay = Ray.towardsPoint(origin, {x: smoothedDestination.x+origin.x, y: smoothedDestination.y+origin.y}, collisionRayLimit)
@@ -206,7 +216,7 @@ function getLeanPoint(origin, destination) {
     if (collision) {
         return getPointAlongLine(origin, {x: collision.x, y: collision.y}, 99/100)
     }
-
+    
     return collisionRay.B
 }
 
@@ -214,6 +224,9 @@ function getOffset(origin, destination) {
     const point = {x: destination.x-origin.x, y: destination.y-origin.y}
     const iconTravel = game.settings.get('token-lean', 'visual-travel')
     const polarResult = applyPolarTransform(point, (r)=>{
+        if (isLegacy()) {
+            return r*iconTravel
+        }
         return r*(1-iconTravel)
     })
     return polarResult
@@ -240,9 +253,10 @@ function endLegacyLean() {
     legacyUpdateVisionPosition(t, t.center, true )
 }
 
-function legacyUpdateVisionPosition(token, newPosition, reset=false) {
+async function legacyUpdateVisionPosition(token, newPosition, reset=false) {
     const sourceId = token.sourceId
     const isVisionSource = token._isVisionSource()
+    let offset
     
     if ( isVisionSource && !reset ) {
         
@@ -255,6 +269,12 @@ function legacyUpdateVisionPosition(token, newPosition, reset=false) {
         lightData.x = newPosition.x
         lightData.y = newPosition.y
         token.light.initialize(lightData)
+        
+        offset = getOffset(token.center, newPosition)
+        
+        token.hud.pivot.x = -offset.x
+        token.hud.pivot.y = -offset.y
+        
     } else {
         let visionData = token.vision.data
         visionData.x = token.center.x
@@ -265,9 +285,19 @@ function legacyUpdateVisionPosition(token, newPosition, reset=false) {
         lightData.x = token.center.x
         lightData.y = token.center.y
         token.light.initialize(lightData)
+        offset = {x:0,y:0}
+    }
+    const updateData = {
+        flags: {
+            'token-lean': {
+                'offsetX': -offset.x,
+                'offsetY': -offset.y
+            }
+        }
     }
     canvas.perception.schedule({
         sight: {refresh: true},
         lighting: {refresh: true}
     })
+    throttledUpdate(token, updateData, {animate: false, bypass: false, lean: true})
 }
