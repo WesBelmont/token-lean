@@ -75,6 +75,8 @@ Hooks.once('init', ()=> {
         default: false,
         onChange: () => {location.reload()}
     })
+
+    //vision offset array
     
     game.keybindings.register('token-lean', 'lean', {
         name: game.i18n.localize('token-lean.Keybind.Name'),
@@ -98,6 +100,10 @@ Hooks.once('init', ()=> {
         },
         repeat: false
     })
+
+    //look towards mouse key.
+    //preview on press
+    //update on release
 })
 
 Hooks.once('ready', () => {

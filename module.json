@@ -33,7 +33,7 @@
         "name": "lib-wrapper"
       }
     ],
-    "socket": false,
+    "socket": true,
     "url": "https://github.com/WesBelmont/token-lean",
     "manifest": "https://github.com/WesBelmont/token-lean/raw/experimental/module.json",
     "download": "https://github.com/WesBelmont/token-lean/raw/experimental/module.zip",
