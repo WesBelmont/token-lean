@@ -8,11 +8,20 @@ Hooks.on('ready', ()=> {
     libWrapper.register('token-lean', 'Levels.prototype.checkCollision', function (token1, token2, type = "sight") {
       const token1LosH = token1.losHeight;
       const token2LosH = token2.losHeight;
-      const p0 = {
-        x: token1.vision.x,
-        y: token1.vision.y,
-        z: token1LosH,
-      };
+      let p0
+      if (token1?.vision?.active) {
+        p0 = {
+          x: token1.vision.x,
+          y: token1.vision.y,
+          z: token1LosH,
+        };
+      } else {
+        p0 = {
+          x: token1.center.x,
+          y: token1.center.y,
+          z: token1LosH,
+        };
+      }
       const p1 = {
         x: token2.center.x,
         y: token2.center.y,
@@ -26,11 +35,20 @@ Hooks.on('ready', ()=> {
       if (this.preciseTokenVisibility === false)
         return this.checkCollision(sourceToken, token, "sight");
       const targetLOSH = token.losHeight;
-      const sourceCenter = {
-        x: sourceToken.vision.x,
-        y: sourceToken.vision.y,
-        z: sourceToken.losHeight,
-      };
+      let sourceCenter
+      if (sourceToken?.vision?.active) {
+        sourceCenter = {
+          x: sourceToken.vision.x,
+          y: sourceToken.vision.y,
+          z: sourceToken.losHeight,
+        };
+      } else {
+        sourceCenter = {
+          x: sourceToken.center.x,
+          y: sourceToken.center.y,
+          z: sourceToken.losHeight,
+        };
+      }
       const tokenCorners = [
         { x: token.center.x, y: token.center.y, z: targetLOSH },
         { x: token.x + tol, y: token.y + tol, z: targetLOSH },
@@ -59,7 +77,12 @@ Hooks.on('ready', ()=> {
             if (this.preciseTokenVisibility === false) {
               let isCollision = _levels.checkCollision(ctk, t, "sight");
               let color = isCollision ? 0xff0000 : 0x00ff08;
-              let coords = [ctk.center.x, ctk.center.y, t.center.x, t.center.y];
+              let coords
+              if (ctk?.vision?.active) {
+                coords = [ctk.vision.x, ctk.vision.y, t.center.x, t.center.y];
+              } else {
+                coords = [ctk.center.x, ctk.center.y, t.center.x, t.center.y];
+              }
               if (ctk != t)
                 g.beginFill(color)
                   .lineStyle(1, color)
@@ -68,11 +91,20 @@ Hooks.on('ready', ()=> {
             } else {
               let targetLOSH = t.losHeight;
               let tol = 4;
-              let sourceCenter = {
-                x: ctk.vision.x,
-                y: ctk.vision.y,
+              let sourceCenter = {}
+              if (ctk?.vision?.active) {
+                sourceCenter = {
+                  x: ctk.vision.x,
+                  y: ctk.vision.y,
+                  z: ctk.losHeight,
+                };
+              } else {
+              sourceCenter = {
+                x: ctk.center.x,
+                y: ctk.center.y,
                 z: ctk.losHeight,
               };
+            }
               let tokenCorners = [
                 { x: t.center.x, y: t.center.y, z: targetLOSH },
                 { x: t.x + tol, y: t.y + tol, z: targetLOSH },
@@ -83,7 +115,7 @@ Hooks.on('ready', ()=> {
               for (let point of tokenCorners) {
                 let isCollision = this.testCollision(sourceCenter, point, "sight",t);
                 let color = isCollision ? 0xff0000 : 0x00ff08;
-                let coords = [ctk.vision.x, ctk.vision.y, point.x, point.y];
+                let coords = [sourceCenter.x, sourceCenter.y, point.x, point.y];
                 if (ctk != t)
                   g.beginFill(color)
                     .lineStyle(1, color)

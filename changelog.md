@@ -1,4 +1,7 @@
-# 1.1.3
+# 1.1.4
+- fixed console error when token with no vision was selected.
+
+## 1.1.3
 - fixed compatability for Levels
 
 ## 1.1.2
