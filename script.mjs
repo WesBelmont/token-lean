@@ -109,22 +109,22 @@ function updateVisionPosition(token, newPosition=null, reset=false) {
 
     if ( isVisionSource && !reset ) {
 
-        let visionData = token.vision
+        let visionData = token.vision.data
         visionData.x = newPosition.x
         visionData.y = newPosition.y
         token.vision.initialize(visionData)
 
-        let lightData = token.light
+        let lightData = token.light.data
         lightData.x = newPosition.x
         lightData.y = newPosition.y
         token.light.initialize(lightData)
     } else {
-        let visionData = token.vision
+        let visionData = token.vision.data
         visionData.x = token.center.x
         visionData.y = token.center.y
         token.vision.initialize(visionData)
 
-        let lightData = token.light
+        let lightData = token.light.data
         lightData.x = token.center.x
         lightData.y = token.center.y
         token.light.initialize(lightData)
