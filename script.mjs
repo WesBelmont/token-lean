@@ -132,5 +132,5 @@ function updateVisionPosition(token, newPosition=null, reset=false) {
     canvas.perception.update({
       refreshVision: true,
       refreshLighting: true
-    });
+    }, true);
 }
