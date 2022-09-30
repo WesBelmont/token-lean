@@ -129,8 +129,8 @@ function updateVisionPosition(token, newPosition=null, reset=false) {
         lightData.y = token.center.y
         token.light.initialize(lightData)
     }
-    canvas.perception.schedule({
-        sight: {refresh: true},
-        lighting: {refresh: true}
-    })
+    canvas.perception.update({
+      refreshVision: true,
+      refreshLighting: true
+    });
 }
