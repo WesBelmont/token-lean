@@ -76,7 +76,7 @@ function leanTowardsMouse() {
     const collisionRayLimit = Math.min(limit, Math.hypot(mousePosition.x - token.center.x, mousePosition.y - token.center.y))
     const collisionRay = Ray.towardsPoint(origin, mousePosition, collisionRayLimit)
     //block leaningToken through impassable terrain walls
-    const collision = RadialSweepPolygon.getRayCollisions(collisionRay, {type:'move', mode: 'closest'})
+    const collision = ClockwiseSweepPolygon.testCollision(collisionRay.A, collisionRay.B, {type:'move', mode: 'closest'})
 
     if (!collision) {
         //set the position to the end of the ray
