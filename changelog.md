@@ -1,4 +1,8 @@
-# 1.1.4
+# 1.2.0
+- updated to Foundry v10
+- thanks to Caewok for their contribution
+
+## 1.1.4
 - fixed console error when token with no vision was selected.
 
 ## 1.1.3
