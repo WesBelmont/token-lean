@@ -1,3 +1,6 @@
+# 1.2.1
+- use getMovementAdjustedPoint to stop peeking through walls
+
 # 1.2.0
 - updated to Foundry v10
 - thanks to Caewok for their contribution
