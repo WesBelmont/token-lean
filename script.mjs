@@ -54,7 +54,7 @@ function enableLean(enable) {
         document.addEventListener('mousemove', updateOnMouseMove)
     } else {
         let token = canvas.tokens.get(game.settings.get(MODULE_NAME, 'leaningToken'))
-        updateVisionPosition(token, token.center, true)
+        updateVisionPosition(token, token.getMovementAdjustedPoint(token.center), true)
         document.removeEventListener('mousemove', updateOnMouseMove)
 
     }
@@ -72,7 +72,7 @@ function leanTowardsMouse() {
     const token = canvas.tokens.get(game.settings.get(MODULE_NAME, 'leaningToken'))
     const mousePosition = canvas.app.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage)
     const limit = canvas.grid.size*(0.5+game.settings.get(MODULE_NAME, 'limit'))
-    const origin = token.center
+    const origin = token.getMovementAdjustedPoint(token.center)
     const collisionRayLimit = Math.min(limit, Math.hypot(mousePosition.x - token.center.x, mousePosition.y - token.center.y))
     const collisionRay = Ray.towardsPoint(origin, mousePosition, collisionRayLimit)
     //block leaningToken through impassable terrain walls
@@ -104,8 +104,8 @@ function leanTowardsMouse() {
 }
 
 function updateVisionPosition(token, newPosition=null, reset=false) {
-    const sourceId = token.sourceId
     const isVisionSource = token._isVisionSource()
+    const origin = token.getMovementAdjustedPoint(token.center)
 
     if ( isVisionSource && !reset ) {
 
@@ -120,13 +120,13 @@ function updateVisionPosition(token, newPosition=null, reset=false) {
         token.light.initialize(lightData)
     } else {
         let visionData = token.vision.data
-        visionData.x = token.center.x
-        visionData.y = token.center.y
+        visionData.x = origin.x
+        visionData.y = origin.y
         token.vision.initialize(visionData)
 
         let lightData = token.light.data
-        lightData.x = token.center.x
-        lightData.y = token.center.y
+        lightData.x = origin.x
+        lightData.y = origin.y
         token.light.initialize(lightData)
     }
     canvas.perception.update({
