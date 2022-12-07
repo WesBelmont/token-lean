@@ -12,7 +12,7 @@
   "flags": {
     "allowBugReporter": true
   },
-  "version": "1.2.1",
+  "version": "1.3.0",
   "esmodules": [
     "script.mjs"
   ],
@@ -24,24 +24,14 @@
       "flags": {}
     }
   ],
-  "relationships": {
-    "requires": [{
-      "id": "lib-wrapper",
-      "type": "module",
-      "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
-      "compatability": {
-        "verified": "v1.12.10.0"
-      }
-    }]
-  },
-  "manifest": "https://github.com/WesBelmont/token-lean/releases/latest/download/module.json",
-  "download": "https://github.com/WesBelmont/token-lean/releases/download/1.2.1/module.zip",
+  "manifest": "https://github.com/WesBelmont/token-lean/releases/download/1.3.0/module.json",
+  "download": "https://github.com/WesBelmont/token-lean/releases/download/1.3.0/module.zip",
   "bugs": "https://github.com/WesBelmont/token-lean/issues",
   "changelog": "https://github.com/WesBelmont/token-lean/blob/master/changelog.md",
   "readme": "https://github.com/WesBelmont/token-lean/blob/master/readme.md",
   "id": "token-lean",
   "compatibility": {
     "minimum": "10",
-    "verified": "10.287"
+    "verified": "10.291"
   }
 }

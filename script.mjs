@@ -1,5 +1,3 @@
-import './compatability/index.mjs'
-
 const MODULE_NAME = 'token-lean'
 
 let wait = false
@@ -79,7 +77,6 @@ function leanTowardsMouse() {
     const collision = ClockwiseSweepPolygon.testCollision(collisionRay.A, collisionRay.B, {type:'move', mode: 'closest'})
 
     if (!collision) {
-        //set the position to the end of the ray
         updateVisionPosition(token, collisionRay.B)
         return
     }
@@ -89,16 +86,6 @@ function leanTowardsMouse() {
         // g.drawCircle(collision.x, collision.y, 1)
         // g.endFill()
         // canvas.app.stage.addChild(g)
-
-        // CURRENTLY BROKEN
-        // //adjust vision to be on the near side of the collision
-        // const distance = Math.hypot(collision.x-origin.x, collision.y-origin.y)
-        // const ratio = (distance-1)/distance
-        // const position = {
-        //     x: origin.x + (collision.x - origin.x)*ratio,
-        //     y: origin.y + (collision.y - origin.y)*ratio
-        // }
-        // updateVisionPosition(token, position)
     }
 
 }
