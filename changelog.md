@@ -1,7 +1,15 @@
-# 1.2.1
+# 1.4.0
+- Added option to enable leaning in combat (with optional scene control toggle)
+- Added option to enable leaning while paused
+- Added option to whisper to GM when leaning (with customisable sound effect)
+
+## 1.3.0
+- updated compatability with Levels
+
+## 1.2.1
 - use getMovementAdjustedPoint to stop peeking through walls
 
-# 1.2.0
+## 1.2.0
 - updated to Foundry v10
 - thanks to Caewok for their contribution
 

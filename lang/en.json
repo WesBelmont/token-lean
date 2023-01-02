@@ -1,4 +1,20 @@
 {
     "token-lean.Limit.Name": "Maximum lean distance",
-    "token-lean.Limit.Hint": "How many squares a token can lean. Works best between 0 and 1. Default = 0.25 (1/4 into the next square)."
+    "token-lean.Limit.Hint": "How many squares a token can lean. Works best between 0 and 1. Default = 0.25 (1/4 into the next square).",
+    "token-lean.leanWhilePaused.Name": "Allow leaning while paused",
+    "token-lean.leanWhilePaused.Hint": "When enabled, characters can lean while the game is paused.",
+    "token-lean.canLeanInCombat.Name": "Allow leaning in combat",
+    "token-lean.canLeanInCombat.Hint": "When enabled, characters can lean during combat encounters. (This can be toggled by the scene control.)",
+    "token-lean.combatLeanToggle.Name": "Add combat lean toggle to scene controls",
+    "token-lean.combatLeanToggle.Hint": "Add a button to the scene controls to toggle leaning in combat.",
+    "token-lean.notifyOnLean.Name": "Notify when leaning",
+    "token-lean.notifyOnLean.Hint": "Send a whisper to the GM when a character leans.",
+    "token-lean.notifyOncePerTurn.Name": "Notify once per turn",
+    "token-lean.notifyOncePerTurn.Hint": "When enabled, limit notifications to once per turn for each character.",
+    "token-lean.notifySound.Name": "Notification sound",
+    "token-lean.notifySound.Hint": "Sound played when a character leans.",
+    "token-lean.playSound.Name": "Play sound with notification",
+    "token-lean.playSound.Hint": "Play a sound when a character leans.",
+    "token-lean.notifyInCombatOnly.Name": "Only notify in combat",
+    "token-lean.notifyInCombatOnly.Hint": "Enable notifications only during combat."   
 }
