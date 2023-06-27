@@ -4,7 +4,7 @@
   "authors": [
     {
       "name": "WesBelmont",
-      "discord": "WesBelmont#7510",
+      "discord": "wesbelmont",
       "flags": {}
     }
   ],
@@ -12,7 +12,7 @@
   "flags": {
     "allowBugReporter": true
   },
-  "version": "1.4.0",
+  "version": "2.0.0",
   "esmodules": [
     "script.mjs"
   ],
@@ -24,14 +24,14 @@
       "flags": {}
     }
   ],
-  "manifest": "https://github.com/WesBelmont/token-lean/releases/download/1.4.0/module.json",
-  "download": "https://github.com/WesBelmont/token-lean/releases/download/1.4.0/module.zip",
+  "manifest": "https://github.com/WesBelmont/token-lean/releases/download/2.0.0/module.json",
+  "download": "https://github.com/WesBelmont/token-lean/releases/download/2.0.0/module.zip",
   "bugs": "https://github.com/WesBelmont/token-lean/issues",
   "changelog": "https://github.com/WesBelmont/token-lean/blob/master/changelog.md",
   "readme": "https://github.com/WesBelmont/token-lean/blob/master/readme.md",
   "id": "token-lean",
   "compatibility": {
-    "minimum": "10",
-    "verified": "10.291"
+    "minimum": "11",
+    "verified": "11"
   }
 }

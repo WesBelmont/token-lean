@@ -1,4 +1,7 @@
-# 1.4.0
+# 2.0.0
+- Add support for Foundry version 11
+
+## 1.4.0
 - Added option to enable leaning in combat (with optional scene control toggle)
 - Added option to enable leaning while paused
 - Added option to whisper to GM when leaning (with customisable sound effect)

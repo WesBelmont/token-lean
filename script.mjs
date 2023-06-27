@@ -177,7 +177,7 @@ function updateOnMouseMove() {
 
 function leanTowardsMouse() {
     const token = canvas.tokens.get(game.settings.get(MODULE_NAME, 'leaningToken'))
-    const mousePosition = canvas.app.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage)
+    const mousePosition = canvas.app.renderer.events.pointer.getLocalPosition(canvas.app.stage)
     const limit = canvas.grid.size*(0.5+game.settings.get(MODULE_NAME, 'limit'))
     const origin = token.getMovementAdjustedPoint(token.center)
     const collisionRayLimit = Math.min(limit, Math.hypot(mousePosition.x - token.center.x, mousePosition.y - token.center.y))
