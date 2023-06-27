@@ -1,4 +1,7 @@
-# 2.0.0
+# 2.1.0
+- Add support for 3D Canvas thanks to theripper93
+
+## 2.0.0
 - Add support for Foundry version 11
 
 ## 1.4.0
